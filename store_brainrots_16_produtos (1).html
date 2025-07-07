@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🧬 Store Brainrots 🧬</title>
+  <style>
+    body {
+      background-color: #0e0e0e;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 30px;
+    }
+    .produto {
+      background: #1c1c1c;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 15px auto;
+      max-width: 400px;
+    }
+    .produto h2 {
+      margin: 0 0 10px 0;
+    }
+    .preco {
+      color: #00ff00;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+    .botao {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #28a745;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .botao:hover {
+      background: #218838;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+    }
+    .modal-content {
+      background-color: #1c1c1c;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 10px;
+      color: #fff;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧬 Store Brainrots 🧬</h1>
+  <div id="produtos"></div>
+
+  <div id="pixModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="fecharModal()">&times;</span>
+      <h2 id="modalNome"></h2>
+      <p class="preco" id="modalPreco"></p>
+      <textarea id="modalPix" style="width:100%;height:100px;">---</textarea>
+      <br>
+      <button class="botao" onclick="copiarPix()">Copiar Pix</button>
+    </div>
+  </div>
+
+  <script>
+    const produtos = [
+      { nome: "🦈 Tralalelitos Normal 🦈", preco: "10,00", pix: "000201...409D" },
+      { nome: "🦈🥇 Tralalelitos GOLD 🥇🦈", preco: "11,00", pix: "000201...A1E1" },
+      { nome: "🦈💎 Tralalelitos DIAMOND 💎🦈", preco: "12,00", pix: "000201...9244" },
+      { nome: "🦈🌈 Tralalelitos RAINBOW 🌈🦈", preco: "15,00", pix: "000201...1472" },
+      { nome: "🐮🪐 Vaca Saturnita 🪐🐮", preco: "8,00", pix: "000201...67E8" },
+      { nome: "🥇🐮🪐 Vaca Saturnita GOLD 🪐🐮🥇", preco: "9,00", pix: "000201...8694" },
+      { nome: "💎🐮🪐 Vaca Saturnita DIAMOND 🪐🐮💎", preco: "10,00", pix: "000201...409D" },
+      { nome: "🌈🐮🪐 Vaca Saturnita RAINBOW 🪐🐮🌈", preco: "13,00", pix: "000201...7338" },
+      { nome: "🪼 Medusi 🪼", preco: "15,00", pix: "000201...1472" },
+      { nome: "🥇🪼 Medusi GOLD 🪼🥇", preco: "16,00", pix: "000201...27D7" },
+      { nome: "💎🪼 Medusi DIAMOND 🪼💎", preco: "17,00", pix: "000201...C6AB" },
+      { nome: "🌈🪼 Medusi RAINBOW 🪼🌈", preco: "20,00", pix: "000201...E3AD" },
+      { nome: "🧪🧫🧬 LÁ Combinasione 🧬🧫🧪", preco: "20,00", pix: "000201...E3AD" },
+      { nome: "🥇🧪🧫🧬 LÁ Combinasione GOLD 🧬🧫🧪🥇", preco: "21,00", pix: "000201...02D1" },
+      { nome: "💎🧪🧫🧬 LÁ Combinasione DIAMOND 🧬🧫🧪💎", preco: "22,00", pix: "000201...3174" },
+      { nome: "🌈🧪🧫🧬 LÁ Combinasione RAINBOW 🧬🧫🧪🌈", preco: "25,00", pix: "000201...B742" }
+    ];
+
+    const container = document.getElementById('produtos');
+    const modal = document.getElementById('pixModal');
+    const modalNome = document.getElementById('modalNome');
+    const modalPreco = document.getElementById('modalPreco');
+    const modalPix = document.getElementById('modalPix');
+
+    function abrirModal(nome, preco, pix) {
+      modalNome.innerText = nome;
+      modalPreco.innerText = `R$ ${preco}`;
+      modalPix.value = pix;
+      modal.style.display = "block";
+    }
+
+    function fecharModal() {
+      modal.style.display = "none";
+    }
+
+    function copiarPix() {
+      modalPix.select();
+      document.execCommand("copy");
+      alert("Código Pix copiado com sucesso!");
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        fecharModal();
+      }
+    }
+
+    produtos.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'produto';
+      div.innerHTML = `
+        <h2>${item.nome}</h2>
+        <p class="preco">R$ ${item.preco}</p>
+        <button class="botao" onclick="abrirModal('${item.nome}', '${item.preco}', '${item.pix}')">Comprar</button>
+      `;
+      container.appendChild(div);
+    });
+  </script>
+</body>
+</html>
