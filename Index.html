@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>馃КStore Brainrots馃К</title>
+  <style>
+    body {
+      background-color: #0e0e0e;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #00ffcc;
+      margin-bottom: 30px;
+    }
+    .menu {
+      margin-bottom: 30px;
+    }
+    .menu button {
+      background-color: #007bff;
+      border: none;
+      padding: 15px 25px;
+      margin: 5px;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .menu button:last-child {
+      background-color: #28a745;
+    }
+    .produto, .duvidas {
+      background-color: #1c1c1c;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 10px auto;
+      max-width: 500px;
+      display: none;
+    }
+    .produto h2 {
+      margin-bottom: 10px;
+    }
+    .produto p {
+      font-size: 1.4em;
+      color: #00ff00;
+      margin: 10px 0;
+    }
+    .produto pre {
+      background-color: #444;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      overflow-x: auto;
+    }
+    .botao {
+      margin: 10px 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .copiar {
+      background-color: #6c757d;
+      color: white;
+    }
+    .voltar {
+      background-color: #dc3545;
+      color: white;
+    }
+    .visivel {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>馃К Store Brainrots 馃К</h1>
+  <div class="menu">
+    <button onclick="mostrarProdutos()">COMPRAR</button>
+    <button onclick="mostrarDuvidas()">D脷VIDAS</button>
+  </div>
+
+  <div id="produtos"></div>
+  <div id="duvidas" class="duvidas">
+    <h2>鉂� D煤vidas Frequentes</h2>
+    <p>馃毇 N茫o usamos Kiwify. Pagamento via PIX direto para a vendedora.</p>
+    <p>鉁� Assim que o pagamento for confirmado, voc锚 receber谩 o produto no WhatsApp ou e-mail.</p>
+    <p>馃摓 Qualquer problema, entre em contato com o suporte: suporte@storebrainrots.com</p>
+    <button class="botao voltar" onclick="voltarInicio()">VOLTAR</button>
+  </div>
+
+  <script>
+    const produtos = [
+      { nome: "馃 Tralalelitos Normal 馃", preco: "R$ 10,00", pix: "00020126580014br.gov.bcb.pix013669c1fdc1-8489-4e73-86fa-e3153fb4c324520400005303986540510.005802BR5924LUCIVANIA DE SOUZA PAIVA6015CACHOEIRA DO PI6211050726f78796304409D" },
+      { nome: "馃馃 Tralalelitos GOLD 馃馃", preco: "R$ 11,00", pix: "00020126580014br.gov.bcb.pix013669c1fdc1-8489-4e73-86fa-e3153fb4c324520400005303986540511.005802BR5924LUCIVANIA DE SOUZA PAIVA6015CACHOEIRA DO PI6211050726f78796304A1E1" },
+      { nome: "馃馃拵 Tralalelitos DIAMOND 馃拵馃", preco: "R$ 12,00", pix: "00020126580014br.gov.bcb.pix013669c1fdc1-8489-4e73-86fa-e3153fb4c324520400005303986540512.005802BR5924LUCIVANIA DE SOUZA PAIVA6015CACHOEIRA DO PI6211050726f787963049244" },
+      { nome: "馃馃寛 Tralalelitos RAINBOW 馃寛馃", preco: "R$ 15,00", pix: "00020126580014br.gov.bcb.pix013669c1fdc1-8489-4e73-86fa-e3153fb4c324520400005303986540515.005802BR5924LUCIVANIA DE SOUZA PAIVA6015CACHOEIRA DO PI6211050726f787963041472" },
+      { nome: "馃惍馃獝 Vaca Saturnita Normal 馃獝馃惍", preco: "R$ 8,00", pix: "00020126580014br.gov.bcb.pix013669c1fdc1-8489-4e73-86fa-e3153fb4c32452040000530398654048.005802BR5924LUCIVANIA DE SOUZA PAIVA6015CACHOEIRA DO PI6211050726f7879630467E8" },
+      { nome: "馃馃惍馃獝 Vaca Saturnita GOLD 馃獝馃惍馃", preco: "R$ 9,00", pix: "00020126580014br.gov.bcb.pix013669c1fdc1-8489-4e73-86fa-e3153fb4c32452040000530398654049.005802BR5924LUCIVANIA DE SOUZA PAIVA6015CACHOEIRA DO PI6211050726f787963048694" },
+      { nome: "馃拵馃惍馃獝 Vaca Saturnita DIAMOND 馃獝馃惍馃拵", preco: "R$ 10,00", pix: "00020126580014br.gov.bcb.pix013669c1fdc1-8489-4e73-86fa-e3153fb4c324520400005303986540510.005802BR5924LUCIVANIA DE SOUZA PAIVA6015CACHOEIRA DO PI6211050726f78796304409D" },
+      { nome: "馃寛馃惍馃獝 Vaca Saturnita RAINBOW 馃獝馃惍馃寛", preco: "R$ 13,00", pix: "00020126580014br.gov.bcb.pix013669c1fdc1-8489-4e73-86fa-e3153fb4c324520400005303986540513.005802BR5924LUCIVANIA DE SOUZA PAIVA6015CACHOEIRA DO PI6211050726f787963047338" },
+      { nome: "馃 Medusi Normal 馃", preco: "R$ 15,00", pix: "00020126580014br.gov.bcb.pix013669c1fdc1-8489-4e73-86fa-e3153fb4c324520400005303986540515.005802BR5924LUCIVANIA DE SOUZA PAIVA6015CACHOEIRA DO PI6211050726f787963041472" },
+      { nome: "馃馃 Medusi GOLD 馃馃", preco: "R$ 16,00", pix: "00020126580014br.gov.bcb.pix013669c1fdc1-8489-4e73-86fa-e3153fb4c324520400005303986540516.005802BR5924LUCIVANIA DE SOUZA PAIVA6015CACHOEIRA DO PI6211050726f7879630427D7" },
+      { nome: "馃拵馃 Medusi DIAMOND 馃馃拵", preco: "R$ 17,00", pix: "00020126580014br.gov.bcb.pix013669c1fdc1-8489-4e73-86fa-e3153fb4c324520400005303986540517.005802BR5924LUCIVANIA DE SOUZA PAIVA6015CACHOEIRA DO PI6211050726f78796304C6AB" },
+      { nome: "馃寛馃 Medusi RAINBOW 馃馃寛", preco: "R$ 20,00", pix: "00020126580014br.gov.bcb.pix013669c1fdc1-8489-4e73-86fa-e3153fb4c324520400005303986540520.005802BR5924LUCIVANIA DE SOUZA PAIVA6015CACHOEIRA DO PI6211050726f78796304E3AD" },
+      { nome: "馃И馃Й馃К L谩 Combinasione Normal 馃К馃Й馃И", preco: "R$ 20,00", pix: "00020126580014br.gov.bcb.pix013669c1fdc1-8489-4e73-86fa-e3153fb4c324520400005303986540520.005802BR5924LUCIVANIA DE SOUZA PAIVA6015CACHOEIRA DO PI6211050726f78796304E3AD" },
+      { nome: "馃馃И馃Й馃К L谩 Combinasione GOLD 馃К馃Й馃И馃", preco: "R$ 21,00", pix: "00020126580014br.gov.bcb.pix013669c1fdc1-8489-4e73-86fa-e3153fb4c324520400005303986540521.005802BR5924LUCIVANIA DE SOUZA PAIVA6015CACHOEIRA DO PI6211050726f7879630402D1" },
+      { nome: "馃拵馃И馃Й馃К L谩 Combinasione DIAMOND 馃К馃Й馃И馃拵", preco: "R$ 22,00", pix: "00020126580014br.gov.bcb.pix013669c1fdc1-8489-4e73-86fa-e3153fb4c324520400005303986540522.005802BR5924LUCIVANIA DE SOUZA PAIVA6015CACHOEIRA DO PI6211050726f787963043174" },
+      { nome: "馃寛馃И馃Й馃К L谩 Combinasione RAINBOW 馃К馃Й馃И馃寛", preco: "R$ 25,00", pix: "00020126580014br.gov.bcb.pix013669c1fdc1-8489-4e73-86fa-e3153fb4c324520400005303986540525.005802BR5924LUCIVANIA DE SOUZA PAIVA6015CACHOEIRA DO PI6211050726f78796304B742" },
+    ];
+
+    const container = document.getElementById('produtos');
+
+    function mostrarProdutos() {
+      container.innerHTML = '';
+      document.getElementById('duvidas').style.display = 'none';
+      produtos.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'produto visivel';
+        div.innerHTML = `
+          <h2>${item.nome}</h2>
+          <p>${item.preco}</p>
+          <pre id="pix${index}">${item.pix}</pre>
+          <button class="botao copiar" onclick="copiarPix('pix${index}')">馃搵 Copiar Pix</button>
+          <button class="botao voltar" onclick="voltarInicio()">VOLTAR</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function mostrarDuvidas() {
+      container.innerHTML = '';
+      document.getElementById('duvidas').style.display = 'block';
+    }
+
+    function voltarInicio() {
+      container.innerHTML = '';
+      document.getElementById('duvidas').style.display = 'none';
+    }
+
+    function copiarPix(id) {
+      const texto = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(texto).then(() => {
+        alert("C贸digo Pix copiado com sucesso!");
+      });
+    }
+  </script>
+</body>
+</html>
